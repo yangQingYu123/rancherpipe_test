@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: helloserver-service
-  namespace: application-namespace
 spec:
   selector:
     app: helloserver
@@ -15,177 +14,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-    field.cattle.io/creatorId: user-hc9lb
-    field.cattle.io/publicEndpoints: '[{"port":30823,"protocol":"TCP","serviceName":"application-namespace:helloserver-service-nodeport","allNodes":true}]'
-  creationTimestamp: "2021-01-08T03:55:48Z"
-  generation: 2
+  name: example-helloserver
   labels:
-    cattle.io/creator: norman
     app: helloserver
-  managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:field.cattle.io/creatorId: {}
-        f:labels:
-          .: {}
-          f:cattle.io/creator: {}
-          f:workload.user.cattle.io/workloadselector: {}
-      f:spec:
-        f:progressDeadlineSeconds: {}
-        f:replicas: {}
-        f:revisionHistoryLimit: {}
-        f:selector:
-          f:matchLabels:
-            .: {}
-            f:workload.user.cattle.io/workloadselector: {}
-        f:strategy:
-          f:rollingUpdate:
-            .: {}
-            f:maxSurge: {}
-            f:maxUnavailable: {}
-          f:type: {}
-        f:template:
-          f:metadata:
-            f:annotations:
-              .: {}
-              f:cattle.io/timestamp: {}
-              f:field.cattle.io/ports: {}
-            f:labels:
-              .: {}
-              f:app: {}
-              f:workload.user.cattle.io/workloadselector: {}
-          f:spec:
-            f:containers:
-              k:{"name":"helloserver-service"}:
-                .: {}
-                f:image: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:ports:
-                  .: {}
-                  k:{"containerPort":80,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:name: {}
-                    f:protocol: {}
-                f:resources: {}
-                f:securityContext:
-                  .: {}
-                  f:allowPrivilegeEscalation: {}
-                  f:capabilities: {}
-                  f:privileged: {}
-                  f:readOnlyRootFilesystem: {}
-                  f:runAsNonRoot: {}
-                f:stdin: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-                f:tty: {}
-            f:dnsConfig: {}
-            f:dnsPolicy: {}
-            f:restartPolicy: {}
-            f:schedulerName: {}
-            f:securityContext: {}
-            f:terminationGracePeriodSeconds: {}
-    manager: Go-http-client
-    operation: Update
-    time: "2021-01-08T03:55:48Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          f:deployment.kubernetes.io/revision: {}
-      f:status:
-        f:conditions:
-          .: {}
-          k:{"type":"Available"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-          k:{"type":"Progressing"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-        f:observedGeneration: {}
-        f:replicas: {}
-        f:unavailableReplicas: {}
-        f:updatedReplicas: {}
-    manager: k3s
-    operation: Update
-    time: "2021-01-08T03:55:48Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          f:field.cattle.io/publicEndpoints: {}
-    manager: rancher
-    operation: Update
-    time: "2021-01-08T03:55:48Z"
-  name: helloserver-service
-  namespace: application-namespace
-  resourceVersion: "1135280"
-  selfLink: /apis/apps/v1/namespaces/application-namespace/deployments/helloserver-service
-  uid: 124fdb21-f079-48d6-8789-3f8a9c61bab1
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: helloserver
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
   template:
     metadata:
-      annotations:
-        cattle.io/timestamp: "2021-01-08T03:55:48Z"
-        field.cattle.io/ports: '[[{"containerPort":80,"dnsName":"helloserver-service-nodeport","hostPort":0,"kind":"NodePort","name":"a-80","protocol":"TCP","sourcePort":0}]]'
       labels:
         app: helloserver
-        workload.user.cattle.io/workloadselector: deployment-application-namespace-helloserver-service
     spec:
       imagePullSecrets:
       - name: pipeline-docker-registry
       containers:
-      - image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
-        imagePullPolicy: Always
-        name: helloserver-service
+      - name: helloserver
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
         ports:
         - containerPort: 80
-          name: a-80
-          protocol: TCP
-        resources: {}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities: {}
-          privileged: false
-          readOnlyRootFilesystem: false
-          runAsNonRoot: false
-        stdin: true
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        tty: true
-      dnsConfig: {}
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
