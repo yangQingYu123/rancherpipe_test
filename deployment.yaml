@@ -29,13 +29,13 @@ spec:
         app: helloserver
     spec:
       imagePullSecrets:
-      - name: pipeline-docker-registry
+        - name: pipeline-docker-registry
       containers:
-      - name: helloserver
-        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
-        ports:
-        - containerPort: 80
-        resources:
+        - name: helloserver
+          image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+          ports:
+            - containerPort: 80
+          resources:
             limits:
               cpu: "0.2"
               memory: 200M
