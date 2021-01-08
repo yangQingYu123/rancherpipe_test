@@ -16,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: example-helloserver
+  namespace: application-namespace
   labels:
     app: helloserver
 spec:
@@ -29,16 +30,16 @@ spec:
         app: helloserver
     spec:
       imagePullSecrets:
-        - name: pipeline-docker-registry
+      - name: pipeline-docker-registry
       containers:
-        - name: helloserver
-          image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              cpu: "0.2"
-              memory: 200M
-            requests:
-              cpu: "0.1"
-              memory: 100M
+      - name: helloserver
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+          - containerPort: 80
+        resources:
+          limits:
+            cpu: "0.2"
+            memory: 200M
+          requests:
+            cpu: "0.1"
+            memory: 100M
