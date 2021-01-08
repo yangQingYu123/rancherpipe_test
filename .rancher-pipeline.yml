@@ -1,15 +1,4 @@
 stages:
-- name: Build
-  steps:
-  - runScriptConfig:
-      image: golang:latest
-      shellScript: |-
-        mkdir -p /go/src/github.com/rancher
-        ln -s `pwd` /go/src/github.com/rancher/pipeline-example-go
-        cd /go/src/github.com/rancher/pipeline-example-go
-        ls
-        go build -o bin/hello-server
-        go test -cover
 - name: Publish
   steps:
   - publishImageConfig:
