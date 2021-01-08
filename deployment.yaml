@@ -32,12 +32,5 @@ spec:
       containers:
       - name: helloserver
         image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
-        resources:
-          limits:
-            cpu: "0.2"
-            memory: 100M
-          requests:
-            cpu: "0.1"
-            memory: 100M
         ports:
         - containerPort: 80
