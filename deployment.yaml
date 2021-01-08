@@ -35,3 +35,10 @@ spec:
         image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
         ports:
         - containerPort: 80
+        resources:
+            limits:
+              cpu: "0.2"
+              memory: 200M
+            requests:
+              cpu: "0.1"
+              memory: 100M
